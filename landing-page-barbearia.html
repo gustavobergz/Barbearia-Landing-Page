@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[NOME DA BARBEARIA] — O corte que você pede é o corte que você leva</title>
+<meta name="description" content="Corte, barba e acabamento feitos por profissionais que escutam antes de cortar. Agende em 1 minuto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14100D;
+    --coffee:#1F1913;
+    --coffee-2:#2A211A;
+    --bone:#F2EBDD;
+    --bone-dim:#C9BFAC;
+    --brass:#C8963E;
+    --brass-bright:#DCAB52;
+    --red:#A8332F;
+    --line:rgba(242,235,221,.12);
+    --radius:14px;
+    --max:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass);color:var(--ink)}
+
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    line-height:1.08;
+  }
+  .eyebrow{
+    font-family:'Space Grotesk',monospace;
+    font-size:.78rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--brass);
+    display:flex;align-items:center;gap:.6rem;
+    margin-bottom:1rem;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--brass)}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  section{padding:76px 0}
+  @media(max-width:640px){section{padding:56px 0}}
+
+  /* ---- signature: barber-pole stripe divider ---- */
+  .stripe{
+    height:10px;
+    background:repeating-linear-gradient(
+      -45deg,
+      var(--red) 0 14px,
+      var(--bone) 14px 28px,
+      var(--brass) 28px 42px,
+      var(--bone) 42px 56px
+    );
+    background-size:200% 100%;
+  }
+  .pole{
+    position:fixed;left:0;top:0;bottom:0;width:7px;z-index:60;
+    background:repeating-linear-gradient(
+      -45deg,
+      var(--red) 0 12px,
+      var(--bone) 12px 24px,
+      var(--brass) 24px 36px,
+      var(--bone) 36px 48px
+    );
+    animation:poleSpin 6s linear infinite;
+    background-size:100% 200%;
+  }
+  @keyframes poleSpin{to{background-position:0 -96px}}
+  @media(prefers-reduced-motion:reduce){
+    .pole{animation:none}
+    html{scroll-behavior:auto}
+    .reveal{opacity:1 !important;transform:none !important;transition:none !important}
+  }
+  @media(max-width:640px){.pole{width:5px}}
+
+  /* ---- buttons ---- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+    background:var(--brass);color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:1.02rem;letter-spacing:.04em;text-transform:uppercase;
+    padding:1.05rem 2rem;border-radius:var(--radius);
+    text-decoration:none;border:none;cursor:pointer;
+    box-shadow:0 10px 30px rgba(200,150,62,.28);
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px);background:#DCAB52;box-shadow:0 14px 36px rgba(200,150,62,.4)}
+  .btn:focus-visible{outline:3px solid var(--bone);outline-offset:3px}
+  .btn.ghost{
+    background:transparent;color:var(--bone);
+    border:1.5px solid var(--line);box-shadow:none;
+  }
+  .btn.ghost:hover{border-color:var(--brass);color:var(--brass)}
+  .micro{
+    display:block;margin-top:.8rem;font-size:.85rem;color:var(--bone-dim);
+    font-family:'Space Grotesk',sans-serif;letter-spacing:.02em;
+  }
+
+  /* ---- hero ---- */
+  header.hero{
+    min-height:92svh;display:flex;align-items:center;
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(900px 500px at 80% -10%, rgba(200,150,62,.14), transparent 60%),
+      radial-gradient(700px 600px at -10% 110%, rgba(168,51,47,.10), transparent 55%),
+      var(--ink);
+  }
+  .hero .wrap{padding-top:90px;padding-bottom:70px}
+  .hero .brand{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;font-size:.85rem;
+    color:var(--bone-dim);margin-bottom:2.6rem;display:flex;align-items:center;gap:.7rem;
+  }
+  .hero .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--red)}
+  .hero h1{
+    font-size:clamp(2.5rem, 6.4vw, 4.6rem);
+    max-width:18ch;
+  }
+  .hero h1 em{font-style:normal;color:var(--brass)}
+  .hero .sub{
+    margin-top:1.6rem;max-width:56ch;font-size:1.12rem;color:var(--bone-dim);
+  }
+  .hero .sub strong{color:var(--bone)}
+  .hero .cta-row{margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+  .hero .trust{
+    margin-top:2.8rem;display:flex;flex-wrap:wrap;gap:1.6rem;
+    font-family:'Space Grotesk',sans-serif;font-size:.86rem;color:var(--bone-dim);
+    letter-spacing:.03em;
+  }
+  .hero .trust span{display:flex;align-items:center;gap:.5rem}
+  .hero .trust b{color:var(--brass)}
+
+  /* ---- section shells ---- */
+  .alt{background:var(--coffee)}
+  h2{font-size:clamp(1.9rem,4.2vw,2.9rem);max-width:24ch;margin-bottom:1.2rem}
+  .lead{color:var(--bone-dim);max-width:62ch;font-size:1.06rem}
+  .lead strong{color:var(--bone)}
+
+  /* ---- pain list ---- */
+  .pain-list{list-style:none;margin:2.2rem 0;display:grid;gap:1rem;max-width:720px}
+  .pain-list li{
+    background:var(--coffee-2);border:1px solid var(--line);
+    border-left:4px solid var(--red);
+    padding:1.1rem 1.3rem;border-radius:10px;font-size:1.02rem;
+  }
+  .pain-list li b{color:var(--bone)}
+  .pain-list li{color:var(--bone-dim)}
+
+  /* ---- benefits ---- */
+  .benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem;margin-top:2.4rem}
+  .benefit{
+    background:var(--coffee-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:1.5rem 1.4rem;
+  }
+  .benefit .ico{font-size:1.5rem;margin-bottom:.7rem}
+  .benefit h3{font-size:1.05rem;letter-spacing:.06em;margin-bottom:.45rem;color:var(--brass)}
+  .benefit p{font-size:.96rem;color:var(--bone-dim)}
+
+  /* ---- steps (solution) ---- */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem;margin-top:2.4rem;counter-reset:step}
+  .step{
+    border:1px solid var(--line);border-radius:var(--radius);padding:1.6rem 1.4rem;
+    background:linear-gradient(180deg, rgba(200,150,62,.06), transparent 60%);
+    counter-increment:step;position:relative;
+  }
+  .step::before{
+    content:"0" counter(step);
+    font-family:'Anton',sans-serif;font-size:2.4rem;color:var(--brass);
+    display:block;margin-bottom:.6rem;opacity:.9;
+  }
+  .step h3{font-size:1.02rem;letter-spacing:.06em;margin-bottom:.5rem}
+  .step p{font-size:.96rem;color:var(--bone-dim)}
+
+  /* ---- social proof ---- */
+  .stats{
+    display:flex;flex-wrap:wrap;gap:1rem;margin:2.2rem 0;
+  }
+  .stat{
+    flex:1 1 180px;background:var(--coffee-2);border:1px solid var(--line);
+    border-radius:var(--radius);padding:1.3rem;text-align:center;
+  }
+  .stat .num{font-family:'Anton',sans-serif;font-size:2rem;color:var(--brass)}
+  .stat .lbl{font-size:.82rem;color:var(--bone-dim);letter-spacing:.05em;text-transform:uppercase;font-family:'Space Grotesk',sans-serif;margin-top:.3rem}
+  .quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem}
+  .quote{
+    background:var(--coffee-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:1.6rem 1.4rem;display:flex;flex-direction:column;gap:.9rem;
+  }
+  .quote .stars{color:var(--brass);letter-spacing:.15em;font-size:.95rem}
+  .quote p{font-size:.98rem;color:var(--bone-dim);font-style:italic}
+  .quote footer{font-family:'Space Grotesk',sans-serif;font-size:.85rem;color:var(--bone);letter-spacing:.03em}
+
+  /* ---- pricing ---- */
+  .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:2.4rem}
+  .price{
+    background:var(--coffee-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:1.8rem 1.5rem;display:flex;flex-direction:column;gap:.7rem;position:relative;
+  }
+  .price.hot{
+    border:1.5px solid var(--brass);
+    background:linear-gradient(180deg, rgba(200,150,62,.12), var(--coffee-2) 55%);
+    transform:scale(1.02);
+  }
+  .price .tag{
+    position:absolute;top:-13px;left:1.2rem;
+    background:var(--brass);color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.72rem;
+    letter-spacing:.12em;text-transform:uppercase;
+    padding:.3rem .7rem;border-radius:6px;
+  }
+  .price h3{font-size:1.15rem;letter-spacing:.06em}
+  .price .inc{font-size:.92rem;color:var(--bone-dim);flex:1}
+  .price .val{font-family:'Anton',sans-serif;font-size:1.9rem;color:var(--bone)}
+  .price .val s{color:var(--bone-dim);font-size:1.1rem;margin-right:.5rem}
+  .bonus{
+    margin-top:2rem;border:1.5px dashed var(--brass);border-radius:var(--radius);
+    padding:1.4rem 1.5rem;background:rgba(200,150,62,.07);
+    font-size:1rem;
+  }
+  .bonus b{color:var(--brass)}
+
+  /* ---- objections ---- */
+  .obj{border-bottom:1px solid var(--line);padding:1.6rem 0}
+  .obj:first-of-type{border-top:1px solid var(--line);margin-top:2rem}
+  .obj h3{font-size:1.08rem;letter-spacing:.05em;color:var(--brass);margin-bottom:.6rem}
+  .obj p{color:var(--bone-dim);max-width:66ch}
+  .obj p b{color:var(--bone)}
+
+  /* ---- guarantee ---- */
+  .guarantee{
+    border:1.5px solid var(--brass);border-radius:var(--radius);
+    padding:2.4rem 2rem;text-align:center;max-width:760px;margin:0 auto;
+    background:
+      radial-gradient(500px 200px at 50% 0%, rgba(200,150,62,.14), transparent 70%),
+      var(--coffee-2);
+  }
+  .guarantee .shield{font-size:2.6rem;margin-bottom:.8rem}
+  .guarantee h2{margin:0 auto 1rem}
+  .guarantee p{color:var(--bone-dim);max-width:56ch;margin:0 auto}
+  .guarantee p b{color:var(--bone)}
+
+  /* ---- urgency ---- */
+  .urgency{
+    background:var(--coffee-2);border:1px solid var(--line);
+    border-left:5px solid var(--red);border-radius:12px;
+    padding:1.6rem 1.6rem;max-width:820px;
+  }
+  .urgency p{color:var(--bone-dim)}
+  .urgency b{color:var(--bone)}
+  .urgency .hl{color:var(--brass)}
+
+  /* ---- FAQ ---- */
+  details{
+    border:1px solid var(--line);border-radius:12px;background:var(--coffee-2);
+    margin-bottom:.8rem;overflow:hidden;
+  }
+  summary{
+    cursor:pointer;padding:1.15rem 1.3rem;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:'Anton',sans-serif;color:var(--brass);font-size:1.3rem;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details .ans{padding:0 1.3rem 1.2rem;color:var(--bone-dim);font-size:.97rem}
+  summary:focus-visible{outline:3px solid var(--brass);outline-offset:-3px}
+
+  /* ---- final CTA ---- */
+  .final{
+    text-align:center;
+    background:
+      radial-gradient(800px 400px at 50% 120%, rgba(200,150,62,.16), transparent 65%),
+      var(--ink);
+  }
+  .final h2{margin:0 auto 1.2rem;max-width:22ch}
+  .final .lead{margin:0 auto 2.2rem}
+  .ps{
+    max-width:720px;margin:3.4rem auto 0;padding:1.6rem;
+    border:1px dashed var(--line);border-radius:var(--radius);
+    color:var(--bone-dim);font-size:.98rem;text-align:left;
+  }
+  .ps b{color:var(--brass)}
+
+  footer.site{
+    padding:2.2rem 0 3.4rem;border-top:1px solid var(--line);
+    color:var(--bone-dim);font-size:.85rem;font-family:'Space Grotesk',sans-serif;
+  }
+  footer.site .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between}
+
+  /* ---- sticky mobile CTA ---- */
+  .sticky-cta{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    padding:.8rem 1rem calc(.8rem + env(safe-area-inset-bottom));
+    background:rgba(20,16,13,.92);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    display:none;
+  }
+  .sticky-cta .btn{width:100%;padding:.95rem 1rem;font-size:.95rem}
+  @media(max-width:720px){.sticky-cta{display:block}body{padding-bottom:84px}}
+
+  /* ---- reveal on scroll ---- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<div class="pole" aria-hidden="true"></div>
+
+<!-- ===== 1-4: HERO (headline, subheadline, abertura, CTA primário) ===== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> [NOME DA BARBEARIA] · [BAIRRO / CIDADE]</div>
+
+    <h1>O corte que você pede é o corte que você <em>leva.</em></h1>
+
+    <p class="sub">Sem surpresa, sem “ficou bom assim mesmo”. Corte, barba e acabamento feitos por profissionais que <strong>escutam antes de cortar</strong> — atendimento pontual, ambiente confortável e resultado alinhado com o seu estilo.</p>
+
+    <div class="cta-row">
+      <a class="btn" href="https://wa.me/5500000000000?text=Quero%20agendar%20meu%20hor%C3%A1rio" target="_blank" rel="noopener">📅 Agendar meu horário agora</a>
+      <a class="btn ghost" href="#servicos">Ver serviços e preços</a>
+    </div>
+    <span class="micro">Agendamento em menos de 1 minuto pelo WhatsApp. Sem fila, sem espera.</span>
+
+    <div class="trust">
+      <span>⭐ <b>[X,X]</b> no Google</span>
+      <span>✂️ <b>[X mil]</b> cortes realizados</span>
+      <span>🔁 <b>[X]%</b> dos clientes voltam</span>
+    </div>
+  </div>
+</header>
+
+<div class="stripe" aria-hidden="true"></div>
+
+<!-- ===== 5: IDENTIFICAÇÃO DA DOR ===== -->
+<section class="alt">
+  <div class="wrap reveal">
+    <p class="eyebrow">A gente sabe como é</p>
+    <h2>Você já passou por isso?</h2>
+    <ul class="pain-list">
+      <li>✂️ Pediu um corte e recebeu <b>outro completamente diferente</b> — e ainda pagou por isso.</li>
+      <li>🎲 Cada visita é uma <b>loteria</b>: às vezes fica bom, às vezes você quer usar boné por 15 dias.</li>
+      <li>⏰ Marcou horário e ficou <b>esperando 40 minutos</b> enquanto o barbeiro terminava “só mais um”.</li>
+      <li>🗣️ O barbeiro <b>não escuta</b> o que você quer e faz o corte que ELE acha melhor.</li>
+      <li>😒 Ambiente desorganizado, higiene duvidosa e atendimento no piloto automático.</li>
+    </ul>
+    <p class="lead">Se você balançou a cabeça em pelo menos um desses pontos, você não está procurando “mais uma barbearia”. Você está procurando <strong>um profissional em quem confiar de olhos fechados</strong> — e é exatamente isso que oferecemos.</p>
+  </div>
+</section>
+
+<!-- ===== 6: SOLUÇÃO ===== -->
+<section>
+  <div class="wrap reveal">
+    <p class="eyebrow">Nosso processo</p>
+    <h2>O jeito [Nome da Barbearia] de cuidar do seu visual</h2>
+    <p class="lead">Aqui, o serviço começa <strong>antes do corte</strong> — e termina só quando você aprova no espelho.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>A conversa</h3>
+        <p>Entendemos o que você quer, o que combina com seu rosto e como é a sua rotina. Foto de referência é bem-vinda.</p>
+      </div>
+      <div class="step">
+        <h3>A execução</h3>
+        <p>Corte, barba, acabamento e pigmentação com atenção aos detalhes que separam “cortou o cabelo” de “visual em dia”.</p>
+      </div>
+      <div class="step">
+        <h3>A consistência</h3>
+        <p>O corte que ficou bom hoje é o corte que você leva na próxima visita. Registramos seu estilo. Sem loteria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe" aria-hidden="true"></div>
+
+<!-- ===== 7: BENEFÍCIOS ===== -->
+<section class="alt">
+  <div class="wrap reveal">
+    <p class="eyebrow">O que muda pra você</p>
+    <h2>Mais que um corte. Uma rotina resolvida.</h2>
+    <div class="benefits">
+      <div class="benefit"><div class="ico">💪</div><h3>Saia mais confiante</h3><p>Visual em dia muda como você se apresenta no trabalho, no date e na foto de perfil.</p></div>
+      <div class="benefit"><div class="ico">🎯</div><h3>O corte que VOCÊ pediu</h3><p>Comunicação clara antes de começar, resultado alinhado no final.</p></div>
+      <div class="benefit"><div class="ico">🔁</div><h3>Consistência toda visita</h3><p>Encontrou o corte ideal? Ele se repete sempre, sem surpresas.</p></div>
+      <div class="benefit"><div class="ico">⏱️</div><h3>Seu tempo respeitado</h3><p>Horário marcado é horário cumprido. O corte encaixa na sua rotina — não o contrário.</p></div>
+      <div class="benefit"><div class="ico">🛋️</div><h3>Experiência, não obrigação</h3><p>Ambiente confortável e limpo onde cortar o cabelo vira o momento bom da semana.</p></div>
+      <div class="benefit"><div class="ico">🧔</div><h3>Barba alinhada com o corte</h3><p>Visual completo e harmônico, não peças soltas.</p></div>
+      <div class="benefit"><div class="ico">🤝</div><h3>Um barbeiro que te conhece</h3><p>A cada visita, menos explicação e mais precisão.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8: PROVA SOCIAL ===== -->
+<section>
+  <div class="wrap reveal">
+    <p class="eyebrow">Prova social</p>
+    <h2>Quem corta aqui, volta. E traz os amigos.</h2>
+
+    <div class="stats">
+      <div class="stat"><div class="num">[X mil]</div><div class="lbl">Cortes realizados</div></div>
+      <div class="stat"><div class="num">⭐ [X,X]</div><div class="lbl">Nota no Google</div></div>
+      <div class="stat"><div class="num">[X]%</div><div class="lbl">Clientes que voltam</div></div>
+    </div>
+
+    <div class="quotes">
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>“[Depoimento real destacando a consistência do corte — substituir por avaliação do Google]”</p>
+        <footer>— [Nome], cliente há [X] meses</footer>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>“[Depoimento real destacando pontualidade e atendimento]”</p>
+        <footer>— [Nome], cliente há [X] meses</footer>
+      </div>
+      <div class="quote">
+        <div class="stars">★★★★★</div>
+        <p>“[Depoimento de quem teve experiência ruim em outro lugar e encontrou vocês]”</p>
+        <footer>— [Nome]</footer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe" aria-hidden="true"></div>
+
+<!-- ===== 9: OFERTA ===== -->
+<section class="alt" id="servicos">
+  <div class="wrap reveal">
+    <p class="eyebrow">Serviços e investimento</p>
+    <h2>Escolha seu serviço e agende em 1 minuto</h2>
+
+    <div class="price-grid">
+      <div class="price">
+        <h3>Corte</h3>
+        <p class="inc">Consulta de estilo + corte + acabamento + finalização.</p>
+        <div class="val">R$ [XX]</div>
+      </div>
+      <div class="price hot">
+        <span class="tag">Mais pedido</span>
+        <h3>Combo Corte + Barba</h3>
+        <p class="inc">Visual completo e harmônico, com desconto no pacote.</p>
+        <div class="val"><s>R$ [XX]</s> R$ [XX]</div>
+      </div>
+      <div class="price">
+        <h3>Barba</h3>
+        <p class="inc">Alinhamento + toalha quente + hidratação.</p>
+        <div class="val">R$ [XX]</div>
+      </div>
+      <div class="price">
+        <h3>Pigmentação</h3>
+        <p class="inc">Disfarce de falhas e efeito preenchido.</p>
+        <div class="val">R$ [XX]</div>
+      </div>
+    </div>
+
+    <div class="bonus">🎁 <b>Oferta de primeira visita:</b> agende por esta página hoje e ganhe <b>[bônus: acabamento de sobrancelha / produto de finalização / R$ X de desconto no combo]</b> na sua primeira visita.</div>
+
+    <div style="margin-top:2.2rem">
+      <a class="btn" href="https://wa.me/5500000000000?text=Quero%20agendar%20meu%20hor%C3%A1rio" target="_blank" rel="noopener">💈 Quero agendar meu horário</a>
+      <span class="micro">Pagamento em Pix, cartão ou dinheiro. Agendamento pelo WhatsApp.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10: QUEBRA DE OBJEÇÕES ===== -->
+<section>
+  <div class="wrap reveal">
+    <p class="eyebrow">Falando na real</p>
+    <h2>“Tá, mas…”</h2>
+
+    <div class="obj">
+      <h3>“Já tive experiências ruins em outras barbearias.”</h3>
+      <p>A gente sabe — e é por isso que nosso processo começa ouvindo você. Antes de qualquer corte, alinhamos exatamente o que você quer. E se algo não ficar como combinado, <b>ajustamos na hora, sem custo e sem drama</b>.</p>
+    </div>
+    <div class="obj">
+      <h3>“E se o barbeiro não entender o corte que eu quero?”</h3>
+      <p>Traga foto de referência, descreva do seu jeito ou peça sugestão — nossos profissionais são treinados pra <b>traduzir o que você imagina</b> no resultado real. A conversa antes do corte não é protocolo: é a parte mais importante do serviço.</p>
+    </div>
+    <div class="obj">
+      <h3>“Está caro.”</h3>
+      <p>Um corte ruim é o mais caro que existe: você paga e ainda passa duas semanas insatisfeito. Aqui você paga por um resultado que dura e valoriza sua imagem. Dividindo pelos ~30 dias que o corte dura, estamos falando de <b>centavos por dia</b> pra estar sempre apresentável.</p>
+    </div>
+    <div class="obj">
+      <h3>“Não tenho tempo.”</h3>
+      <p>Por isso o agendamento é online e o horário marcado é <b>cumprido</b>. Você chega, é atendido e sai — sem fila, sem tarde perdida. O serviço completo cabe até num horário de almoço.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11: GARANTIA ===== -->
+<section class="alt">
+  <div class="wrap reveal">
+    <div class="guarantee">
+      <div class="shield">🛡️</div>
+      <h2>Garantia de alinhamento</h2>
+      <p>Se o resultado não sair como combinamos antes do corte, <b>ajustamos na hora, sem custo adicional</b>. Simples assim: o risco é nosso, não seu. Você só sai da cadeira quando estiver satisfeito com o que vê no espelho.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12: URGÊNCIA / ESCASSEZ ===== -->
+<section>
+  <div class="wrap reveal">
+    <p class="eyebrow">Antes que lote</p>
+    <h2>Agenda com horários limitados</h2>
+    <div class="urgency">
+      <p>⚠️ Para garantir atendimento pontual e sem pressa, trabalhamos com <b>número reduzido de horários por dia</b> — especialmente <b>sextas, sábados e fim de mês</b>, que costumam lotar com dias de antecedência.</p>
+      <p style="margin-top:.9rem">🎁 <span class="hl">O bônus de primeira visita é válido apenas para agendamentos feitos por esta página até [DATA / CONDIÇÃO REAL].</span></p>
+    </div>
+    <div style="margin-top:2rem">
+      <a class="btn" href="https://wa.me/5500000000000?text=Quero%20garantir%20meu%20hor%C3%A1rio" target="_blank" rel="noopener">📅 Garantir meu horário agora</a>
+    </div>
+  </div>
+</section>
+
+<div class="stripe" aria-hidden="true"></div>
+
+<!-- ===== 13: FAQ ===== -->
+<section class="alt">
+  <div class="wrap reveal">
+    <p class="eyebrow">Dúvidas frequentes</p>
+    <h2>Perguntas que sempre chegam no WhatsApp</h2>
+
+    <details>
+      <summary>Preciso agendar ou posso chegar sem hora marcada?</summary>
+      <div class="ans">Recomendamos agendar — é o que garante atendimento pontual e sem espera. O agendamento leva menos de 1 minuto pelo WhatsApp.</div>
+    </details>
+    <details>
+      <summary>Quanto tempo dura o atendimento?</summary>
+      <div class="ans">Corte: cerca de [XX] min. Combo corte + barba: cerca de [XX] min. Seu horário é reservado só pra você.</div>
+    </details>
+    <details>
+      <summary>Posso levar foto de referência do corte?</summary>
+      <div class="ans">Pode e deve! Referências ajudam a alinhar exatamente o resultado. E se não tiver ideia do que quer, nossos profissionais sugerem o que mais combina com seu rosto e estilo.</div>
+    </details>
+    <details>
+      <summary>Quais formas de pagamento vocês aceitam?</summary>
+      <div class="ans">[Pix, cartão de débito/crédito e dinheiro — ajustar conforme a realidade da barbearia.]</div>
+    </details>
+    <details>
+      <summary>Atendem crianças e adolescentes?</summary>
+      <div class="ans">Sim! Atendemos a partir de [X] anos, com o mesmo cuidado e atenção.</div>
+    </details>
+    <details>
+      <summary>E se eu não gostar do resultado?</summary>
+      <div class="ans">Vale nossa Garantia de Alinhamento: ajustamos na hora, sem custo, até ficar como combinado.</div>
+    </details>
+    <details>
+      <summary>Onde vocês ficam e qual o horário de funcionamento?</summary>
+      <div class="ans">[Endereço completo + link do Google Maps]. Funcionamos de [dias e horários].</div>
+    </details>
+  </div>
+</section>
+
+<!-- ===== 14-15: CTA FINAL + PS ===== -->
+<section class="final">
+  <div class="wrap reveal">
+    <h2>Seu próximo corte pode ser só mais um. Ou o começo de nunca mais se preocupar com isso.</h2>
+    <p class="lead" style="text-align:center">Homens bem resolvidos não perdem tempo procurando barbeiro todo mês. Eles encontram <strong>o profissional certo</strong> — e voltam sempre.</p>
+    <a class="btn" href="https://wa.me/5500000000000?text=Quero%20agendar%20meu%20hor%C3%A1rio" target="_blank" rel="noopener">💈 Quero agendar meu horário</a>
+    <span class="micro">Vagas limitadas nos horários de pico. Agendamento em 1 minuto.</span>
+
+    <div class="ps">
+      <b>P.S.:</b> Você já perdeu tempo (e paciência) com cortes que não pediu. A [NOME DA BARBEARIA] existe pra isso nunca mais acontecer: corte alinhado, horário cumprido, resultado garantido. <b>Sua primeira visita vem com [BÔNUS] — mas só agendando por aqui.</b>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© [ANO] [Nome da Barbearia] · [Endereço, Cidade – UF]</span>
+    <span>[@instagram] · [WhatsApp: (00) 00000-0000]</span>
+  </div>
+</footer>
+
+<!-- sticky CTA (mobile) -->
+<div class="sticky-cta">
+  <a class="btn" href="https://wa.me/5500000000000?text=Quero%20agendar%20meu%20hor%C3%A1rio" target="_blank" rel="noopener">📅 Agendar pelo WhatsApp</a>
+</div>
+
+<script>
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
